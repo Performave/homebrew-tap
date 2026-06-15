@@ -8,8 +8,11 @@ class YabaiPlus < Formula
 
   depends_on macos: :big_sur
 
-  # Both install a `yabai` binary; they cannot coexist.
-  conflicts_with "yabai", because: "both install a `yabai` binary"
+  # NOTE: this installs a `yabai` binary and so collides with the upstream
+  # `yabai` formula. We deliberately do NOT use `conflicts_with "yabai"`: the
+  # upstream formula lives in a third-party tap (koekeishiya/formulae) that
+  # modern Homebrew refuses to auto-load, which would break `brew info`/install.
+  # Homebrew's automatic keg link-collision check covers this case instead.
 
   def install
     # Release tarballs ship a notarized, Developer ID-signed universal binary.
